@@ -18,13 +18,17 @@ It decides whether a strategy is safe to become active.
 
 ---
 
-## Quick demo
+## Public demo
 
 Run:
 
 ./demo.sh
 
-The demo shows two outcomes:
+This is a public walkthrough of the gate behavior.
+
+It demonstrates the decision surface without exposing the private runtime core.
+
+The walkthrough shows two outcomes:
 
 - valid execution state -> activation allowed
 - corrupted execution state -> activation blocked
@@ -91,7 +95,9 @@ MERGEN enforces authority only if it is part of the activation path.
 If a system bypasses MERGEN and activates strategies directly,
 MERGEN cannot prevent that behavior.
 
-This is an activation control layer, not a magic global guardrail.
+This public repository does not expose the private runtime core.
+
+It exposes the product surface and a public walkthrough only.
 
 ---
 
