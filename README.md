@@ -8,28 +8,38 @@ No valid trace -> no activation
 
 ---
 
+## What this is
+
+MERGEN is a pre-activation authority gate for trading systems.
+
+It does not decide whether a strategy is profitable.
+
+It decides whether a strategy is safe to become active.
+
+---
+
 ## Quick demo
 
 Run:
 
 ./demo.sh
 
-You will see:
+The demo shows two outcomes:
 
-- valid state -> activation allowed
-- corrupted state -> activation blocked
+- valid execution state -> activation allowed
+- corrupted execution state -> activation blocked
 
 ---
 
-## What it does
+## What it checks
 
-MERGEN is a pre-activation authority gate for trading systems.
+Before activation, MERGEN verifies whether execution state is still trustworthy.
 
-It verifies that a strategy:
+That includes:
 
-- has a valid deterministic execution trace
-- is replay-consistent
-- is not corrupted or tampered
+- deterministic execution trace validity
+- replay consistency
+- state integrity before activation
 
 If verification fails:
 
@@ -39,16 +49,18 @@ activation is blocked
 
 ## Why this matters
 
-Without a gate:
+A strategy can pass backtest and still be unsafe to activate.
+
+Without an activation gate:
 
 - corrupted execution state can reach live systems
-- replay mismatch goes unnoticed
+- replay mismatch can go unnoticed
+- broken strategies can become active silently
 - debugging becomes slow and unreliable
-- broken strategies can be promoted silently
 
 With MERGEN:
 
-- invalid state is stopped before activation
+- invalid execution state is stopped before activation
 - activation becomes a controlled boundary
 - broken strategies do not enter the active set
 
@@ -68,6 +80,7 @@ With MERGEN:
 - not an order router
 - not a backtesting tool
 - not a portfolio manager
+- not a risk model
 
 ---
 
@@ -78,9 +91,11 @@ MERGEN enforces authority only if it is part of the activation path.
 If a system bypasses MERGEN and activates strategies directly,
 MERGEN cannot prevent that behavior.
 
+This is an activation control layer, not a magic global guardrail.
+
 ---
 
-## One-line truth
+## Public truth
 
 Activation is the last safe checkpoint.
 
